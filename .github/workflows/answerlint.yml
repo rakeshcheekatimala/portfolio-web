@@ -6,7 +6,7 @@ on:
       threshold:
         description: Minimum composite score required to pass
         required: true
-        default: "30"
+        default: "40"
         type: string
 
 permissions:
