@@ -1,0 +1,43 @@
+name: AnswerLint website audit
+
+on:
+  workflow_dispatch:
+    inputs:
+      threshold:
+        description: Minimum composite score required to pass
+        required: true
+        default: "30"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Audit rakeshcheekatimala.com
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run AnswerLint
+        run: |
+          npx --yes answerlint@1.2.1 audit \
+            --url "https://www.rakeshcheekatimala.com/" \
+            --ci \
+            --threshold "${{ inputs.threshold }}" \
+            --output json \
+            --output-path ./answerlint-report.json
+
+      - name: Upload AnswerLint report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: answerlint-report
+          path: answerlint-report.json
+          if-no-files-found: error
+          retention-days: 14
