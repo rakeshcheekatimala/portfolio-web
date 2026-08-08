@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
+import { ChatCircleDots } from '@phosphor-icons/react'
 
 const ChatModal = dynamic(() => import('./ChatModal'), { ssr: false })
 
@@ -11,12 +12,12 @@ export default function AskAgentButton() {
   return (
     <>
       <button
+        type="button"
         onClick={() => setOpen(true)}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg border border-line bg-paper px-5 py-3 text-center font-semibold text-ink shadow-card transition hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent hover:shadow-glow-sm sm:w-auto"
+        data-cursor-label="Ask"
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md border border-line-strong px-6 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent sm:w-auto"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
+        <ChatCircleDots size={16} weight="bold" aria-hidden="true" />
         Ask My Agent
       </button>
 

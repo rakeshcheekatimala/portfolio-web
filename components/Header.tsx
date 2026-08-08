@@ -1,86 +1,108 @@
 'use client'
+
 import Link from 'next/link'
-import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { motion, useScroll, useMotionValueEvent } from 'motion/react'
+import { List, X } from '@phosphor-icons/react'
 import ThemeToggle from './ThemeToggle'
+
+const links = [
+  { href: '/work', label: 'Work' },
+  { href: '/projects', label: 'Case Studies' },
+  { href: '/about', label: 'About' },
+]
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [lifted, setLifted] = useState(false)
+  const pathname = usePathname()
+  const { scrollY } = useScroll()
 
-  const handleNavClick = () => {
-    setIsMenuOpen(false)
-  }
+  // Only flips state when the threshold is crossed, not on every frame.
+  useMotionValueEvent(scrollY, 'change', (value) => {
+    const next = value > 12
+    setLifted((prev) => (prev === next ? prev : next))
+  })
+
+  const closeMenu = () => setIsMenuOpen(false)
+  const isActive = (href: string) =>
+    Boolean(pathname) && (pathname === href || pathname!.startsWith(`${href}/`))
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line/70 bg-wash/82 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-6">
-        <Link href="/" className="group flex items-center gap-3 transition">
-          <Image
-            src="/images/profilepic.jpeg"
-            alt="Rakesh Cheekatimala"
-            width={44}
-            height={44}
-            className="rounded-lg border border-line bg-paper shadow-card transition group-hover:-translate-y-0.5 group-hover:border-accent/40"
-          />
-          <span className="text-xl font-bold tracking-tight text-ink">Rakesh</span>
+    <header
+      className={`sticky top-0 z-40 transition-colors duration-300 ${
+        lifted ? 'border-b border-line bg-base/80 backdrop-blur-xl' : 'border-b border-transparent'
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 md:px-8">
+        <Link href="/" className="group flex items-center gap-2.5" aria-label="Rakesh Cheekatimala, home">
+          <span
+            aria-hidden="true"
+            className="grid h-8 w-8 place-items-center rounded-md border border-line bg-surface font-mono text-[10px] font-semibold tracking-tight text-ink transition-colors group-hover:border-accent group-hover:text-accent"
+          >
+            RC
+          </span>
+          <span className="text-[15px] font-semibold tracking-tight text-ink">Rakesh</span>
         </Link>
 
-        <div className="hidden items-center gap-3 md:flex">
-          {/* Desktop Navigation */}
-          <nav className="flex items-center gap-2 rounded-full border border-line/80 bg-paper/70 p-1 text-sm font-semibold shadow-card backdrop-blur">
-           
-            <Link href="/work" className="rounded-full px-4 py-2 text-muted transition hover:bg-accent-soft hover:text-accent-dim" onClick={handleNavClick}>
-              Work
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+              className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                isActive(link.href) ? 'text-ink' : 'text-faint hover:text-ink'
+              }`}
+            >
+              {link.label}
+              {isActive(link.href) ? (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute inset-x-3 -bottom-px h-px bg-accent"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              ) : null}
             </Link>
-            <Link href="/projects" className="rounded-full px-4 py-2 text-muted transition hover:bg-accent-soft hover:text-accent-dim" onClick={handleNavClick}>
-              Case Studies
-            </Link>
-            <Link href="/about" className="rounded-full px-4 py-2 text-muted transition hover:bg-accent-soft hover:text-accent-dim" onClick={handleNavClick}>
-              About
-            </Link>
-          </nav>
+          ))}
+          <span className="mx-2 h-4 w-px bg-line" aria-hidden="true" />
           <ThemeToggle />
-        </div>
+        </nav>
 
-        {/* Mobile Menu Button */}
-        <div className="flex md:hidden gap-3 items-center">
+        <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="rounded-lg border border-line bg-paper p-2 text-muted shadow-card transition hover:border-accent/40 hover:text-accent"
-            aria-label="Toggle menu"
+            type="button"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            className="grid h-9 w-9 place-items-center rounded-md border border-line text-body transition-colors hover:text-ink"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}
           >
-            {isMenuOpen ? (
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-              </svg>
-            )}
+            {isMenuOpen ? <X size={18} weight="bold" /> : <List size={18} weight="bold" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
-      {isMenuOpen && (
-        <nav className="border-t border-line bg-wash/95 backdrop-blur-xl md:hidden">
-          <div className="mx-auto flex max-w-7xl flex-col gap-2 px-6 py-4">
-           
-            <Link href="/work" className="rounded-lg px-3 py-3 text-muted transition hover:bg-accent-soft hover:text-accent-dim" onClick={handleNavClick}>
-              Work
-            </Link>
-            <Link href="/projects" className="rounded-lg px-3 py-3 text-muted transition hover:bg-accent-soft hover:text-accent-dim" onClick={handleNavClick}>
-              Case Studies
-            </Link>
-            <Link href="/about" className="rounded-lg px-3 py-3 text-muted transition hover:bg-accent-soft hover:text-accent-dim" onClick={handleNavClick}>
-              About
-            </Link>
+      {isMenuOpen ? (
+        <nav className="border-t border-line bg-base md:hidden" aria-label="Mobile">
+          <div className="mx-auto flex max-w-6xl flex-col px-5 py-2">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={closeMenu}
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                className={`border-b border-line/60 py-3.5 text-[15px] font-medium last:border-b-0 ${
+                  isActive(link.href) ? 'text-accent' : 'text-body'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </nav>
-      )}
+      ) : null}
     </header>
   )
 }

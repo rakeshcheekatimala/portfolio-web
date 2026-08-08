@@ -40,7 +40,7 @@ export const mockProjects: Project[] = [
       'Contributed to new payment methods and save-card capability across production payment journeys.',
       'Used performance audits to keep the work tied to measurable user and business outcomes.'
     ],
-    tags: ['React', 'TypeScript', 'Performance', 'Payments', 'Lighthouse']
+    tags: ['React', 'TypeScript', 'Performance', 'Payments', 'Lighthouse'],
   },
   {
     title: 'eKYC Micro-Frontend Platform',
@@ -64,7 +64,7 @@ export const mockProjects: Project[] = [
       'Standardized shared UI patterns with Storybook documentation for more consistent delivery.',
       'Improved team velocity by making frontend integration boundaries easier to reason about.'
     ],
-    tags: ['React', 'Rollup', 'Micro-Frontend', 'Storybook', 'Architecture']
+    tags: ['React', 'Rollup', 'Micro-Frontend', 'Storybook', 'Architecture'],
   },
   {
     title: 'Developer Tooling & Quality System',
@@ -88,6 +88,6 @@ export const mockProjects: Project[] = [
       'Used Storybook to document reusable UI components and improve design consistency.',
       'Set up Cypress and CI coverage gates to catch regressions earlier in the delivery lifecycle.'
     ],
-    tags: ['Node.js', 'Storybook', 'Cypress', 'Jest', 'CI/CD', 'Developer Experience']
+    tags: ['Node.js', 'Storybook', 'Cypress', 'Jest', 'CI/CD', 'Developer Experience'],
   }
 ]

@@ -2,10 +2,14 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import Header from './Header'
 
 describe('Header', () => {
-  it('renders the logo and site name', () => {
+  it('renders the home link with the wordmark', () => {
     render(<Header />)
-    
-    expect(screen.getByAltText('Rakesh Cheekatimala')).toBeInTheDocument()
+
+    // The portrait is decorative; the link itself carries the accessible name.
+    expect(screen.getByRole('link', { name: /rakesh cheekatimala, home/i })).toHaveAttribute(
+      'href',
+      '/'
+    )
     expect(screen.getByText('Rakesh')).toBeInTheDocument()
   })
 
@@ -25,19 +29,24 @@ describe('Header', () => {
   it('toggles mobile menu when hamburger is clicked', async () => {
     render(<Header />)
     
-    const menuButton = screen.getByLabelText('Toggle menu')
-    
+    const menuButton = screen.getByRole('button', { name: /open menu/i })
+
     // Menu should be closed initially
     expect(screen.queryAllByText('Case Studies')).toHaveLength(1)
-    
+    expect(menuButton).toHaveAttribute('aria-expanded', 'false')
+
     // Open menu
     fireEvent.click(menuButton)
     await waitFor(() => {
       expect(screen.getAllByText('Case Studies')).toHaveLength(2)
     })
-    
+    expect(screen.getByRole('button', { name: /close menu/i })).toHaveAttribute(
+      'aria-expanded',
+      'true'
+    )
+
     // Close menu
-    fireEvent.click(menuButton)
+    fireEvent.click(screen.getByRole('button', { name: /close menu/i }))
     await waitFor(() => {
       expect(screen.queryAllByText('Case Studies')).toHaveLength(1)
     })

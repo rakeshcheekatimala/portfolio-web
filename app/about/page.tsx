@@ -1,4 +1,15 @@
-import LocationBanner from '../../components/LocationBanner'
+import Link from 'next/link'
+import type { Metadata } from 'next'
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
+import LocationBanner from '@components/LocationBanner'
+import Reveal from '@components/Reveal'
+
+export const metadata: Metadata = {
+  title: 'About - Rakesh Cheekatimala',
+  description:
+    'Senior platform engineer in Singapore working across payments, eKYC, property, e-commerce, enterprise platforms, and developer tooling.',
+  alternates: { canonical: '/about' },
+}
 
 const certifications = [
   {
@@ -25,85 +36,114 @@ const certifications = [
 
 export default function About() {
   return (
-    <div className="mx-auto max-w-5xl px-6 py-20">
-      <h1 className="mb-8 text-5xl font-bold leading-none tracking-tight text-ink md:text-7xl">
-        About
-      </h1>
-      
-      <div className="space-y-8 text-lg leading-relaxed text-muted">
-        <p className="rounded-lg border border-line bg-paper p-6 text-xl leading-relaxed shadow-card">
-          I&apos;m a senior platform engineer based in Singapore. Over the last 10+ years, I&apos;ve worked across payments, eKYC, property, e-commerce, enterprise platforms, and developer tooling.
-        </p>
-        
-        <p className="rounded-lg border border-line bg-paper p-6 shadow-card">
-          My strongest work sits where product value and engineering quality meet: faster checkout flows, cleaner frontend architecture, reliable testing practices, shared component systems, and tools that help teams move with more confidence.
-        </p>
-        
-        <p className="rounded-lg border border-line bg-paper p-6 shadow-card">
-          I care about systems that hold up after launch. That means clear boundaries, practical documentation, measurable performance work, and code that the next engineer can understand without archaeology.
-        </p>
+    <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
+      <div className="max-w-3xl">
+        <div>
+          <Reveal>
+            <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight text-ink md:text-5xl">
+              About
+            </h1>
+          </Reveal>
 
-        <section className="rounded-lg border border-line bg-paper p-6 shadow-card md:p-8">
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 className="text-3xl font-bold text-ink mb-3">
-                Certifications
-              </h2>
-              <p className="text-muted">
+          <Reveal index={1}>
+            <div className="mt-10 max-w-2xl space-y-6">
+              <p className="text-xl leading-relaxed text-ink text-pretty">
+                I&apos;m a senior platform engineer based in Singapore. Over the last 10+ years,
+                I&apos;ve worked across payments, eKYC, property, e-commerce, enterprise platforms,
+                and developer tooling.
+              </p>
+              <p className="text-[17px] leading-relaxed text-body text-pretty">
+                My strongest work sits where product value and engineering quality meet: faster
+                checkout flows, cleaner frontend architecture, reliable testing practices, shared
+                component systems, and tools that help teams move with more confidence.
+              </p>
+              <p className="text-[17px] leading-relaxed text-body text-pretty">
+                I care about systems that hold up after launch. That means clear boundaries,
+                practical documentation, measurable performance work, and code that the next
+                engineer can understand without archaeology.
+              </p>
+            </div>
+          </Reveal>
+        </div>
+
+      </div>
+
+      <section className="mt-24 border-t border-line pt-12">
+        <Reveal>
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-xl">
+              <h2 className="text-3xl font-semibold tracking-tight text-ink">Certifications</h2>
+              <p className="mt-4 text-[15px] leading-relaxed text-body">
                 Recent AI and cloud credentials that support the Applied AI and platform direction.
               </p>
             </div>
-            <a
+            <Link
               href="https://sg.linkedin.com/in/rakesh-cheekatimala?trk=public_post_feed-actor-name"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-line bg-wash px-4 py-2 text-center text-base font-semibold text-ink transition hover:border-accent/40 hover:text-accent"
+              className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md border border-line-strong px-5 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent"
             >
               Verify on LinkedIn
-            </a>
+              <ArrowUpRight size={13} weight="bold" aria-hidden="true" />
+            </Link>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+        </Reveal>
+
+        <Reveal>
+          <ul className="mt-10 grid gap-x-12 sm:grid-cols-2">
             {certifications.map((certification) => (
-              <article key={certification.title} className="rounded-lg border border-line bg-wash/70 p-5">
-                <h3 className="text-xl font-bold text-ink">
+              <li key={certification.title} className="border-t border-line py-6">
+                <h3 className="text-base font-semibold leading-snug text-ink">
                   {certification.title}
                 </h3>
-                <p className="mt-2 text-base font-semibold text-muted">
-                  {certification.issuer}
-                </p>
-                <p className="mt-1 text-sm text-subtle">
-                  {certification.date}
-                </p>
-              </article>
+                <p className="mt-2 text-sm text-body">{certification.issuer}</p>
+                <p className="mt-1 font-mono text-[11px] text-faint tnum">{certification.date}</p>
+              </li>
             ))}
-          </div>
-        </section>
+          </ul>
+        </Reveal>
+      </section>
 
-        <div className="rounded-lg border border-line bg-paper p-6 shadow-card md:p-8">
-          <h2 className="text-3xl font-bold text-ink mb-4">
-            Let&apos;s Connect
-          </h2>
-          <p className="mb-6 text-muted">
-            Interested in senior frontend platform work, architecture, payments, eKYC, or developer tooling? LinkedIn is the best place to start.
+      <section className="mt-24 rounded-lg border border-line bg-[radial-gradient(120%_120%_at_100%_0%,var(--color-accent-wash),transparent_60%)] p-8 md:p-12">
+        <Reveal>
+          <h2 className="text-3xl font-semibold tracking-tight text-ink">Let&apos;s Connect</h2>
+          <p className="mt-4 max-w-xl text-[17px] leading-relaxed text-body text-pretty">
+            Interested in senior frontend platform work, architecture, payments, eKYC, or developer
+            tooling? LinkedIn is the best place to start.
           </p>
-          <div className="flex flex-col gap-4 sm:flex-row">
-            <a href="https://www.linkedin.com/in/rakesh-cheekatimala/" target="_blank" rel="noopener noreferrer" className="rounded-lg bg-accent px-6 py-3 text-center font-semibold text-accent-contrast transition hover:-translate-y-0.5 hover:bg-accent-dim">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="https://www.linkedin.com/in/rakesh-cheekatimala/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center rounded-md bg-accent px-6 text-sm font-semibold text-accent-contrast transition-colors hover:bg-accent-hover"
+            >
               LinkedIn
-            </a>
-            <a href="https://github.com/rakeshcheekatimala" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-line bg-wash px-6 py-3 text-center font-semibold text-ink transition hover:-translate-y-0.5 hover:border-accent-light hover:text-accent-light">
+            </Link>
+            <Link
+              href="https://github.com/rakeshcheekatimala"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-12 items-center justify-center rounded-md border border-line-strong px-6 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent"
+            >
               GitHub
-            </a>
+            </Link>
           </div>
-        </div>
+        </Reveal>
+      </section>
 
-        <section className="rounded-lg border border-line bg-paper p-6 shadow-card md:p-8">
-          <h2 className="text-3xl font-bold text-ink mb-4">Based in Singapore</h2>
-          <p className="mb-6 text-muted">
-            A small geographic note for context, kept here rather than on the hiring-focused homepage.
+      <section className="mt-24 border-t border-line pt-12">
+        <Reveal>
+          <h2 className="text-3xl font-semibold tracking-tight text-ink">Based in Singapore</h2>
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-body">
+            A small geographic note for context, kept here rather than on the hiring-focused
+            homepage.
           </p>
+        </Reveal>
+        <div className="mt-8">
           <LocationBanner />
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   )
 }

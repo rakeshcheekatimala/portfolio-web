@@ -38,10 +38,11 @@ describe('ProjectPage', () => {
     expect(screen.getByText('This is the test problem')).toBeInTheDocument()
   })
 
-  it('renders not found message when slug does not exist', () => {
-    render(<ProjectPage params={{ slug: 'non-existent' }} />)
-    
-    expect(screen.getByText('Project not found')).toBeInTheDocument()
+  // An unknown slug now hands off to the Next.js not-found boundary.
+  it('triggers the not-found boundary when the slug does not exist', () => {
+    expect(() => render(<ProjectPage params={{ slug: 'non-existent' }} />)).toThrow(
+      /NEXT_NOT_FOUND/
+    )
   })
 
   it('renders back to work links', () => {

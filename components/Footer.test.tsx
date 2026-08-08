@@ -2,17 +2,20 @@ import { render, screen } from '@testing-library/react'
 import Footer from './Footer'
 
 describe('Footer', () => {
-  it('renders footer with correct sections', () => {
+  it('renders the wordmark and the writing link', () => {
     render(<Footer />)
-    
-    expect(screen.getByText('Site')).toBeInTheDocument()
-    expect(screen.getByText('Social')).toBeInTheDocument()
-    expect(screen.getByText('Writing')).toBeInTheDocument()
+
+    expect(screen.getByText('Rakesh Cheekatimala')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /read on substack/i })).toHaveAttribute(
+      'href',
+      'https://rakeshcheekatimala.substack.com'
+    )
   })
 
   it('renders navigation links', () => {
     render(<Footer />)
-    
+
+    expect(screen.getByRole('navigation', { name: 'Footer' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/')
     expect(screen.getByRole('link', { name: 'Work' })).toHaveAttribute('href', '/work')
     expect(screen.getByRole('link', { name: 'Case Studies' })).toHaveAttribute('href', '/projects')

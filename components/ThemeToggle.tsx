@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Moon, Sun } from '@phosphor-icons/react'
 
 type Theme = 'light' | 'dark'
 
@@ -8,13 +9,9 @@ const STORAGE_KEY = 'portfolio-theme'
 
 function getPreferredTheme(): Theme {
   if (typeof window === 'undefined') return 'dark'
-  const storedTheme = window.localStorage.getItem(STORAGE_KEY)
-
-  if (storedTheme === 'light' || storedTheme === 'dark') {
-    return storedTheme
-  }
-
-  return 'light'
+  const stored = window.localStorage.getItem(STORAGE_KEY)
+  if (stored === 'light' || stored === 'dark') return stored
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
 function applyTheme(theme: Theme) {
@@ -24,14 +21,16 @@ function applyTheme(theme: Theme) {
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>('dark')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const preferredTheme = getPreferredTheme()
-    setTheme(preferredTheme)
-    applyTheme(preferredTheme)
+    const preferred = getPreferredTheme()
+    setTheme(preferred)
+    applyTheme(preferred)
+    setMounted(true)
   }, [])
 
-  const nextTheme = theme === 'dark' ? 'light' : 'dark'
+  const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark'
 
   function handleToggle() {
     setTheme(nextTheme)
@@ -45,24 +44,13 @@ export default function ThemeToggle() {
       aria-label="Toggle color theme"
       title={`Switch to ${nextTheme} theme`}
       onClick={handleToggle}
-      className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-line bg-paper text-muted shadow-card transition hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent hover:shadow-glow-sm"
+      className="grid h-9 w-9 place-items-center rounded-md border border-line text-faint transition-colors hover:border-line-strong hover:text-ink"
     >
-      {theme === 'dark' ? (
-        <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 3a6.6 6.6 0 1 0 8.8 8.8A8 8 0 1 1 12 3Z" />
-        </svg>
+      {/* Icon is decided on the client, so nothing renders until the theme is known. */}
+      {mounted ? (
+        theme === 'dark' ? <Moon size={16} weight="fill" /> : <Sun size={16} weight="fill" />
       ) : (
-        <svg aria-hidden="true" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="4" />
-          <path d="M12 2v2" />
-          <path d="M12 20v2" />
-          <path d="m4.93 4.93 1.41 1.41" />
-          <path d="m17.66 17.66 1.41 1.41" />
-          <path d="M2 12h2" />
-          <path d="M20 12h2" />
-          <path d="m6.34 17.66-1.41 1.41" />
-          <path d="m19.07 4.93-1.41 1.41" />
-        </svg>
+        <span className="h-4 w-4" />
       )}
     </button>
   )

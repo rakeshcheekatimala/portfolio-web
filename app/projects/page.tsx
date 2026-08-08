@@ -1,27 +1,33 @@
+import type { Metadata } from 'next'
+import CaseStudyIndex from '@components/CaseStudyIndex'
+import Reveal from '@components/Reveal'
 import { getMockProjects } from '../../lib/mock-data'
-import Card from '../../components/Card'
+
+export const metadata: Metadata = {
+  title: 'Case Studies - Rakesh Cheekatimala',
+  description:
+    'Frontend architecture, performance, quality, and developer experience work from production payments, eKYC, and property systems.',
+  alternates: { canonical: '/projects' },
+}
 
 export default async function ProjectsPage() {
   const projects = await getMockProjects()
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-20">
-      <div className="mb-16 max-w-4xl">
-        <p className="text-sm font-semibold uppercase text-accent mb-4">
-          Case Studies
-        </p>
-        <h1 className="mb-6 text-5xl font-bold leading-none tracking-tight text-ink md:text-7xl">
+    <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
+      <Reveal>
+        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">Case Studies</p>
+        <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink text-balance md:text-5xl">
           Engineering work with measurable value
         </h1>
-        <p className="text-xl md:text-2xl text-muted leading-relaxed max-w-3xl">
-          A focused set of frontend architecture, performance, quality, and developer experience work from production systems, shaped for quick hiring-leader review.
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-body text-pretty">
+          A focused set of frontend architecture, performance, quality, and developer experience work
+          from production systems, shaped for quick hiring-leader review.
         </p>
-      </div>
-      
-      <div className="grid gap-8 lg:grid-cols-3">
-        {projects.map(p => (
-          <Card key={p.slug} title={p.title} description={p.impact ?? p.outcome ?? p.summary} href={`/projects/${p.slug}`} />
-        ))}
+      </Reveal>
+
+      <div className="mt-16">
+        <CaseStudyIndex projects={projects} />
       </div>
     </div>
   )

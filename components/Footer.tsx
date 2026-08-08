@@ -1,35 +1,53 @@
+import Link from 'next/link'
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
+import SocailLinks from './SocailLinks'
+
+const siteLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/work', label: 'Work' },
+  { href: '/projects', label: 'Case Studies' },
+  { href: '/about', label: 'About' },
+]
+
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-line/80 bg-wash text-ink">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-12 md:grid-cols-3">
-          <div>
-            <h4 className="mb-4 font-bold text-ink">Site</h4>
-            <ul className="space-y-2 text-muted">
-              <li><a href="/" className="hover:text-accent-light transition">Home</a></li>
-              <li><a href="/work" className="hover:text-accent-light transition">Work</a></li>
-              <li><a href="/projects" className="hover:text-accent-light transition">Case Studies</a></li>
-              <li><a href="/about" className="hover:text-accent-light transition">About</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="mb-4 font-bold text-ink">Social</h4>
-            <ul className="space-y-2 text-muted">
-              <li><a href="https://x.com/RCheekatim12238" target="_blank" rel="noopener noreferrer" className="hover:text-accent-light transition">Twitter</a></li>
-              <li><a href="https://github.com/rakeshcheekatimala" target="_blank" rel="noopener noreferrer" className="hover:text-accent-light transition">GitHub</a></li>
-              <li><a href="https://www.linkedin.com/in/rakesh-cheekatimala/" target="_blank" rel="noopener noreferrer" className="hover:text-accent-light transition">LinkedIn</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="mb-4 font-bold text-ink">Writing</h4>
-            <p className="mb-3 text-base leading-relaxed text-muted">Notes on frontend architecture, testing, AI experiments, and developer experience.</p>
-            <a href="https://rakeshcheekatimala.substack.com" target="_blank" rel="noopener noreferrer" className="font-semibold text-accent-light hover:text-ink transition">
+    <footer className="mt-auto border-t border-line">
+      <div className="mx-auto max-w-6xl px-5 py-14 md:px-8">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-sm">
+            <p className="text-lg font-semibold tracking-tight text-ink">Rakesh Cheekatimala</p>
+            <p className="mt-3 text-sm leading-relaxed text-faint">
+              Notes on frontend architecture, testing, AI experiments, and developer experience.
+            </p>
+            <Link
+              href="https://rakeshcheekatimala.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-opacity hover:opacity-70"
+            >
               Read on Substack
-            </a>
+              <ArrowUpRight size={13} weight="bold" aria-hidden="true" />
+            </Link>
           </div>
+
+          <nav aria-label="Footer" className="flex flex-col gap-3">
+            {siteLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-faint transition-colors hover:text-ink"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
-        <div className="mt-12 border-t border-line pt-8 text-center text-sm text-muted">
-          <p>© {new Date().getFullYear()} - Built with Next.js and Tailwind.</p>
+
+        <div className="mt-12 flex flex-col-reverse items-start gap-6 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[13px] text-faint">
+            © {new Date().getFullYear()} Rakesh Cheekatimala. Built with Next.js and Tailwind.
+          </p>
+          <SocailLinks />
         </div>
       </div>
     </footer>

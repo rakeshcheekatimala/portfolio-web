@@ -1,71 +1,79 @@
+import Reveal from './Reveal'
 import { experiences } from '../experiences'
 
 export default function ExperienceTimeline() {
   return (
-    <section className="py-10 md:py-16">
-      <div className="mb-12 max-w-4xl">
-        <h2 className="mb-4 text-5xl font-bold leading-none tracking-tight text-ink md:text-7xl">
+    <section>
+      <Reveal>
+        <h1 className="max-w-3xl text-4xl font-semibold leading-[1.05] tracking-tight text-ink text-balance md:text-5xl">
           Work &amp; Experience
-        </h2>
-        <p className="text-lg md:text-xl text-muted max-w-2xl">
-          A snapshot of the roles that shaped how I think about building reliable, scalable, and user-centric applications.
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-body text-pretty">
+          A snapshot of the roles that shaped how I think about building reliable, scalable, and
+          user-centric applications.
         </p>
-      </div>
+      </Reveal>
 
-      <ol className="relative space-y-8">
-        {experiences.map((exp, index) => (
-          <li key={`${exp.company}-${exp.role}-${index}`}>
-            <div className="group grid gap-4 rounded-lg border border-line bg-paper p-6 shadow-card transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover md:grid-cols-[0.22fr_1fr] md:p-8">
-              <div className="flex items-center gap-3 md:block">
-                <span className="grid h-11 w-11 place-items-center rounded-lg border border-line bg-wash text-sm font-bold text-accent transition group-hover:border-accent/40 group-hover:bg-accent-soft">
-                  {index + 1}
-                </span>
-                <p className="mt-0 text-sm font-medium text-subtle md:mt-4">
-                  {exp.start} - {exp.end}
-                </p>
-              </div>
-              <div>
-              <header className="mb-4 flex flex-col md:flex-row md:items-baseline md:justify-between gap-2">
-                <div>
-                  <h3 className="text-2xl font-semibold text-ink">
-                    {exp.role}
-                  </h3>
-                  <p className="text-graphite text-lg">
-                    {exp.company}
-                    {exp.location ? (
-                      <span className="text-subtle text-base"> - {exp.location}</span>
-                    ) : null}
-                  </p>
-                </div>
-              </header>
+      <ol className="mt-16">
+        {experiences.map((experience) => (
+          <Reveal
+            key={`${experience.company}-${experience.start}`}
+            as="li"
+            className="grid gap-x-12 gap-y-5 border-t border-line py-10 md:grid-cols-[13rem_1fr] md:py-12"
+          >
+            <div className="md:sticky md:top-24 md:self-start">
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-faint tnum">
+                {experience.start} to {experience.end}
+              </p>
+              <p className="mt-3 text-lg font-semibold tracking-tight text-ink">
+                {experience.company}
+              </p>
+              {experience.location ? (
+                <p className="mt-1 text-sm text-faint">{experience.location}</p>
+              ) : null}
+            </div>
 
-              <p className="text-muted text-base md:text-lg leading-relaxed mb-4">
-                {exp.summary}
+            <div>
+              <h2 className="text-xl font-semibold tracking-tight text-ink md:text-2xl">
+                {experience.role}
+              </h2>
+              <p className="mt-4 max-w-2xl text-[17px] leading-relaxed text-body text-pretty">
+                {experience.summary}
               </p>
 
-              {exp.highlights.length > 0 && (
-                <ul className="list-disc list-inside space-y-1.5 text-muted text-sm md:text-base mb-4">
-                  {exp.highlights.map((item, i) => (
-                    <li key={i}>{item}</li>
+              {experience.highlights.length > 0 ? (
+                <ul className="mt-6 max-w-2xl">
+                  {experience.highlights.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-4 border-b border-line/60 py-3.5 last:border-b-0"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-2.5 h-1 w-3 shrink-0 rounded-full bg-accent/70"
+                      />
+                      <span className="text-[15px] leading-relaxed text-body text-pretty">
+                        {item}
+                      </span>
+                    </li>
                   ))}
                 </ul>
-              )}
+              ) : null}
 
-              {exp.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {exp.tags.map(tag => (
+              {experience.tags.length > 0 ? (
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {experience.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center rounded-md border border-accent/20 bg-accent-soft px-3 py-1 text-xs font-medium text-accent-dim"
+                      className="rounded-sm border border-line px-2.5 py-1 font-mono text-[11px] text-faint"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-              )}
-              </div>
+              ) : null}
             </div>
-          </li>
+          </Reveal>
         ))}
       </ol>
     </section>

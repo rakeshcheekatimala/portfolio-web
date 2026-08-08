@@ -1,146 +1,157 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
+/*
+  Design system: neutral zinc base with a single burnt-orange accent.
+  Radius scale is fixed at three steps and must not be extended:
+  sm (badges, tags, inputs), md (buttons, controls), lg (cards, panels).
+*/
 @theme {
-  --color-ink: #2B130A;
-  --color-graphite: #5C321E;
-  --color-muted: #7A5540;
-  --color-subtle: #9F7660;
-  --color-paper: #FFF2E8;
-  --color-wash: #FFF8F3;
-  --color-line: #E9CDBB;
-  --color-accent: #C65A1E;
-  --color-accent-light: #FF8435;
-  --color-accent-dim: #9F3B12;
-  --color-accent-soft: #F8DDCB;
-  --color-accent-contrast: #FFF8F3;
-  --shadow-glow: 0 18px 46px rgba(198, 90, 30, 0.18);
-  --shadow-glow-sm: 0 10px 26px rgba(198, 90, 30, 0.14);
-  --shadow-card: 0 24px 70px rgba(76, 35, 14, 0.1);
-  --shadow-card-hover: 0 34px 90px rgba(76, 35, 14, 0.16), 0 0 38px rgba(198, 90, 30, 0.08);
-  --radius-md: 0.875rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1rem;
+  --color-base: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-raised: #F4F4F5;
+  --color-ink: #09090B;
+  --color-body: #52525B;
+  --color-faint: #71717A;
+  --color-line: #E4E4E7;
+  --color-line-strong: #D4D4D8;
+  --color-accent: #C2410C;
+  --color-accent-hover: #9A3412;
+  --color-accent-bright: #EA580C;
+  --color-accent-contrast: #FFFFFF;
+  --color-accent-wash: rgba(194, 65, 12, 0.08);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+
+  --shadow-low: 0 1px 2px rgba(24, 24, 27, 0.05);
+  --shadow-mid: 0 1px 2px rgba(24, 24, 27, 0.04), 0 10px 28px rgba(24, 24, 27, 0.07);
+  --shadow-high: 0 1px 2px rgba(24, 24, 27, 0.04), 0 22px 54px rgba(24, 24, 27, 0.11);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-out-quint: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
   color-scheme: light;
-  --modal-backdrop: rgba(76, 35, 14, 0.18);
-  --bg-glow-primary: 0.03;
-  --bg-glow-secondary: 0.018;
-  --bg-grid-opacity: 0.02;
-  --surface-grid-opacity: 0.03;
-  --surface-grid-fill: 88%;
+  --grain-opacity: 0.025;
+  --modal-scrim: rgba(9, 9, 11, 0.4);
+  --spot: rgba(194, 65, 12, 0.07);
+  --cursor-glow: rgba(194, 65, 12, 0.42);
 }
 
 .dark {
   color-scheme: dark;
-  --modal-backdrop: rgba(0, 0, 0, 0.58);
-  --color-ink: #F4F4F5;
-  --color-graphite: #F7D6C0;
-  --color-muted: #C49B84;
-  --color-subtle: #8F6F5E;
-  --color-paper: #150A06;
-  --color-wash: #0A0403;
-  --color-line: #2E201A;
-  --color-accent: #FF8435;
-  --color-accent-light: #FF9E73;
-  --color-accent-dim: #DA6946;
-  --color-accent-soft: #3C2117;
-  --color-accent-contrast: #0A0403;
-  --shadow-glow: 0 18px 46px rgba(255, 132, 53, 0.24);
-  --shadow-glow-sm: 0 10px 26px rgba(255, 132, 53, 0.18);
-  --shadow-card: 0 24px 70px rgba(0, 0, 0, 0.22);
-  --shadow-card-hover: 0 34px 90px rgba(0, 0, 0, 0.34), 0 0 38px rgba(255, 132, 53, 0.12);
-  --bg-glow-primary: 0.035;
-  --bg-glow-secondary: 0.018;
-  --bg-grid-opacity: 0.012;
-  --surface-grid-opacity: 0.018;
-  --surface-grid-fill: 88%;
+  --color-base: #08090A;
+  --color-surface: #101114;
+  --color-raised: #16181C;
+  --color-ink: #FAFAFA;
+  --color-body: #A1A1AA;
+  --color-faint: #71717A;
+  --color-line: #232528;
+  --color-line-strong: #2F3237;
+  --color-accent: #FF7A18;
+  --color-accent-hover: #FF9147;
+  --color-accent-bright: #FFA45C;
+  --color-accent-contrast: #0A0A0B;
+  --color-accent-wash: rgba(255, 122, 24, 0.11);
+
+  --shadow-low: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-mid: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.45);
+  --shadow-high: 0 1px 2px rgba(0, 0, 0, 0.5), 0 24px 60px rgba(0, 0, 0, 0.6);
+
+  --grain-opacity: 0.04;
+  --modal-scrim: rgba(0, 0, 0, 0.66);
+  --spot: rgba(255, 122, 24, 0.1);
+  --cursor-glow: rgba(255, 122, 24, 0.5);
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background:
-    radial-gradient(circle at 16% 8%, rgba(255, 132, 53, var(--bg-glow-primary)), transparent 30rem),
-    radial-gradient(circle at 78% 6%, rgba(218, 105, 70, var(--bg-glow-secondary)), transparent 28rem),
-    linear-gradient(rgba(255, 132, 53, var(--bg-grid-opacity)) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 132, 53, var(--bg-grid-opacity)) 1px, transparent 1px),
-    var(--color-wash);
-  background-size: 56px 56px;
-  color: var(--color-muted);
+  background-color: var(--color-base);
+  color: var(--color-body);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  font-family: Outfit, Geist, Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-h1 {
-  @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight;
-  letter-spacing: 0;
-  font-family: Outfit, Geist, Manrope, "Space Grotesk", Inter, sans-serif;
+/* Fixed grain layer. Kept off scrolling containers so it never repaints. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-h2 {
-  @apply text-3xl md:text-4xl font-bold leading-tight;
-  font-family: Outfit, Geist, Manrope, "Space Grotesk", Inter, sans-serif;
-}
-
-h3 {
-  @apply text-2xl md:text-3xl font-bold;
-  font-family: Outfit, Geist, Manrope, "Space Grotesk", Inter, sans-serif;
-}
-
-p {
-  @apply leading-relaxed text-lg;
-}
-
-/* Links */
 a {
-  /* color: #0F766E;*/
   text-decoration: none;
-  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
 a:focus-visible,
-button:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--color-accent) 48%, transparent);
-  outline-offset: 4px;
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-accent) 42%, transparent);
-  color: var(--color-ink);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
 }
 
-.surface-grid {
-  background:
-    linear-gradient(rgba(255, 132, 53, var(--surface-grid-opacity)) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 132, 53, var(--surface-grid-opacity)) 1px, transparent 1px),
-    color-mix(in srgb, var(--color-paper) var(--surface-grid-fill), transparent);
-  background-size: 32px 32px;
+/* Metrics and dates align in columns. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
 }
 
 .text-balance {
   text-wrap: balance;
 }
 
-.reveal {
-  animation: revealUp 520ms ease both;
+.text-pretty {
+  text-wrap: pretty;
 }
 
-@keyframes revealUp {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
+/* Cursor-reactive spotlight used by interactive rows and panels. */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 320ms var(--ease-out-quint);
+  background: radial-gradient(
+    22rem circle at var(--mx, 50%) var(--my, 50%),
+    var(--spot),
+    transparent 70%
+  );
+}
+
+.spotlight:hover::before,
+.spotlight:focus-within::before {
+  opacity: 1;
+}
+
+.prose {
+  @apply max-w-none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -153,24 +164,7 @@ button:focus-visible {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-}
-
-
-
-/* Prose for markdown/article content */
-.prose {
-  @apply max-w-none;
-}
-
-/* Utility for section spacing */
-.section-spacing {
-  @apply py-16 md:py-24 lg:py-32;
-}
-
-.subscribe {
-  @apply leading-relaxed text-lg;
-  color: var(--color-accent-light);
 }
