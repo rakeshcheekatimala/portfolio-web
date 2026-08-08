@@ -1,7 +1,15 @@
 import Link from 'next/link'
-import SocailLinks from '../components/SocailLinks'
-import AskAgentButton from '../components/AskAgentButton'
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr'
+import AskAgentButton from '@components/AskAgentButton'
+import CaseStudyIndex from '@components/CaseStudyIndex'
+import Magnetic from '@components/Magnetic'
+import Reveal from '@components/Reveal'
+import SocailLinks from '@components/SocailLinks'
+import Spotlight from '@components/Spotlight'
 import { getMockProjects } from '../lib/mock-data'
+import { experiences } from '../experiences'
+
+const LINKEDIN = 'https://www.linkedin.com/in/rakesh-cheekatimala/'
 
 const proofPoints = [
   { value: '60%', label: 'bundle-size reduction on a payments app' },
@@ -13,130 +21,255 @@ const proofPoints = [
 const valuePillars = [
   {
     title: 'Revenue-critical frontend',
-    description: 'Payments, checkout, and onboarding work where speed, reliability, and business outcomes have to move together.',
+    description:
+      'Payments, checkout, and onboarding work where speed, reliability, and business outcomes have to move together.',
   },
   {
     title: 'Platform architecture',
-    description: 'Micro-frontends, shared UI standards, Storybook documentation, and integration boundaries that help teams scale cleanly.',
+    description:
+      'Micro-frontends, shared UI standards, Storybook documentation, and integration boundaries that help teams scale cleanly.',
   },
   {
     title: 'Delivery confidence',
-    description: 'Testing strategy, CI quality gates, Lighthouse workflows, Sentry visibility, and internal tooling that reduce delivery friction.',
+    description:
+      'Testing strategy, CI quality gates, Lighthouse workflows, Sentry visibility, and internal tooling that reduce delivery friction.',
   },
 ]
 
 export default async function Home() {
   const projects = await getMockProjects()
+  const [leadPillar, ...supportingPillars] = valuePillars
 
   return (
     <>
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-16 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div className="reveal space-y-7">
-            <p className="text-sm md:text-base font-semibold uppercase text-accent">
-              Senior Software Engineer — Platforms & Applied AI
+      {/* Hero: evidence-led editorial split with no decorative artwork. */}
+      <section className="mx-auto grid max-w-6xl items-start gap-12 px-5 pb-16 pt-12 md:px-8 md:pb-24 md:pt-20 lg:grid-cols-[minmax(0,1.45fr)_minmax(16rem,0.55fr)] lg:gap-20">
+        <div>
+          <Reveal>
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-accent">
+              Senior Software Engineer, Platforms &amp; Applied AI
             </p>
-            <h1 className="max-w-5xl text-5xl font-bold leading-[0.95] tracking-tight text-ink md:text-6xl lg:text-7xl">
+          </Reveal>
+
+          <Reveal index={1}>
+            <h1 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight text-ink text-balance md:text-5xl lg:text-6xl">
               I build revenue critical systems that customers can trust.
             </h1>
-            <p className="text-xl md:text-2xl text-graphite leading-relaxed max-w-3xl">
-              I&apos;m Rakesh Cheekatimala, a Singapore-based engineer with 10+ years across payments, eKYC, property, commerce, and enterprise platforms. I focus on performance, clean architecture, reliable tests, and developer tooling that helps teams ship with confidence.
+          </Reveal>
+
+          <Reveal index={2}>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-body text-pretty">
+              I&apos;m Rakesh Cheekatimala, a Singapore-based engineer with 10+ years across
+              payments, eKYC, property, commerce, and enterprise platforms.
             </p>
-            <div className="flex flex-col gap-3 pt-4 sm:flex-row sm:items-center">
-              <Link
-                href="https://www.linkedin.com/in/rakesh-cheekatimala/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-accent px-5 py-3 text-center font-semibold text-accent-contrast transition hover:bg-accent-dim hover:shadow-glow sm:w-auto"
-              >
-                Connect on LinkedIn
-              </Link>
+          </Reveal>
+
+          <Reveal index={3}>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <Magnetic>
+                <Link
+                  href={LINKEDIN}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor-label="LinkedIn"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-accent px-6 text-sm font-semibold text-accent-contrast transition-colors hover:bg-accent-hover sm:w-auto"
+                >
+                  Connect on LinkedIn
+                  <ArrowRight size={15} weight="bold" />
+                </Link>
+              </Magnetic>
               <AskAgentButton />
             </div>
-            <SocailLinks />
-          </div>
+          </Reveal>
 
-          <div className="surface-grid reveal rounded-lg border border-line bg-paper/80 p-4 shadow-card md:p-6 lg:delay-150">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {proofPoints.map((point) => (
-                <div key={point.value} className="rounded-lg border border-line bg-paper p-5 shadow-card transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover">
-                  <p className="text-4xl font-black tracking-tight text-ink">{point.value}</p>
-                  <p className="mt-3 text-sm text-muted leading-relaxed">{point.label}</p>
-                </div>
-              ))}
+          <Reveal index={4}>
+            <div className="mt-8 flex items-center gap-1 border-t border-line pt-6">
+              <SocailLinks />
             </div>
-          </div>
+          </Reveal>
         </div>
+
+        <Reveal index={2} distance={20}>
+          <aside className="border-t border-line pt-7 lg:mt-1 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint">
+              Current focus
+            </p>
+            <ul className="mt-6">
+              {[
+                ['01', 'Frontend platforms'],
+                ['02', 'Payments & identity'],
+                ['03', 'Applied AI systems'],
+              ].map(([number, label]) => (
+                <li
+                  key={number}
+                  className="flex items-center gap-5 border-t border-line py-5 first:border-t-0 first:pt-0"
+                >
+                  <span className="font-mono text-[10px] text-accent tnum">{number}</span>
+                  <span className="text-sm font-medium text-ink">{label}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-7 border-t border-line pt-6 text-sm leading-relaxed text-faint">
+              Singapore-based. Building systems where platform quality directly supports customer
+              trust and business growth.
+            </p>
+          </aside>
+        </Reveal>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="mb-8 max-w-3xl">
-          <p className="text-sm font-semibold uppercase text-accent">What I&apos;m hired to improve</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink md:text-5xl">Calm engineering judgment for frontend systems.</h2>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {valuePillars.map((pillar) => (
-            <article key={pillar.title} className="group rounded-lg border border-line bg-paper p-7 shadow-card transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover">
-              <div className="mb-7 h-1 w-12 rounded-full bg-accent transition group-hover:w-20" />
-              <h3 className="text-2xl font-bold text-ink">{pillar.title}</h3>
-              <p className="mt-4 text-base leading-relaxed text-muted">{pillar.description}</p>
-            </article>
+      {/* Proof metrics: plain columns divided by hairlines, no cards. */}
+      <section className="mx-auto max-w-6xl px-5 md:px-8">
+        <dl className="grid grid-cols-2 gap-y-10 border-y border-line py-12 lg:grid-cols-4 lg:gap-y-0">
+          {proofPoints.map((point, index) => (
+            <Reveal
+              key={point.value}
+              index={index}
+              className="lg:border-l lg:border-line lg:first:border-l-0 lg:px-8 lg:first:pl-0"
+            >
+              <dt className="font-mono text-4xl font-medium tracking-tight text-ink tnum md:text-5xl">
+                {point.value}
+              </dt>
+              <dd className="mt-3 max-w-[15rem] pr-4 text-sm leading-relaxed text-faint">
+                {point.label}
+              </dd>
+            </Reveal>
           ))}
-        </div>
+        </dl>
       </section>
 
-      {projects.length > 0 ? (
-        <section className="mx-auto max-w-7xl px-6 py-16">
-          <div className="mb-8 flex items-end justify-between gap-6">
-            <p className="text-sm font-semibold uppercase text-accent">Case Studies</p>
-            <Link href="/projects" className="hidden font-semibold text-accent hover:text-accent-dim sm:inline-flex">
-              Case Studies
-            </Link>
-          </div>
-          <div className="grid gap-6 lg:grid-cols-3">
-            {projects.map((project) => (
-              <Link
-                key={project.slug}
-                href={`/projects/${project.slug}`}
-                className="group flex min-h-80 flex-col justify-between overflow-hidden rounded-lg border border-line bg-paper p-7 shadow-card transition hover:-translate-y-1 hover:border-accent/40 hover:shadow-card-hover"
-              >
-                <div>
-                  <p className="mb-5 text-sm font-semibold text-accent">{project.outcome}</p>
-                  <h3 className="text-2xl font-bold leading-tight text-ink transition group-hover:text-accent">{project.title}</h3>
-                  <p className="mt-4 text-base leading-relaxed text-muted">{project.impact ?? project.summary}</p>
-                </div>
-                <span className="mt-8 inline-flex font-semibold text-accent transition group-hover:translate-x-1">
-                  Read case study
-                </span>
-              </Link>
+      {/* Positioning: asymmetric bento, one lead cell plus two supporting cells. */}
+      <section className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
+        <Reveal>
+          <p className="text-sm font-medium text-accent">What I&apos;m hired to improve</p>
+          <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-ink text-balance md:text-4xl">
+            Calm engineering judgment for frontend systems.
+          </h2>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-body text-pretty">
+            I focus on performance, clean architecture, reliable tests, and developer tooling that
+            helps teams ship with confidence.
+          </p>
+        </Reveal>
+
+        <div className="mt-12 grid gap-4 lg:grid-cols-[1.25fr_1fr]">
+          <Reveal className="h-full">
+            <Spotlight
+              as="article"
+              className="flex h-full flex-col justify-center rounded-lg border border-line bg-[radial-gradient(130%_130%_at_0%_0%,var(--color-accent-wash),transparent_58%)] p-8 md:p-12"
+            >
+              <h3 className="text-2xl font-semibold tracking-tight text-ink md:text-3xl">
+                {leadPillar.title}
+              </h3>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-body text-pretty">
+                {leadPillar.description}
+              </p>
+            </Spotlight>
+          </Reveal>
+
+          <div className="grid gap-4">
+            {supportingPillars.map((pillar, index) => (
+              <Reveal key={pillar.title} index={index + 1}>
+                <Spotlight
+                  as="article"
+                  className={`h-full rounded-lg border border-line p-7 ${
+                    index === 0 ? 'bg-raised' : 'bg-surface'
+                  }`}
+                >
+                  <h3 className="text-lg font-semibold tracking-tight text-ink">{pillar.title}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-body text-pretty">
+                    {pillar.description}
+                  </p>
+                </Spotlight>
+              </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Case studies: editorial index with a pointer-tracked preview. */}
+      {projects.length > 0 ? (
+        <section className="mx-auto max-w-6xl px-5 pb-20 md:px-8 md:pb-28">
+          <Reveal>
+            <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
+              <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-ink text-balance md:text-4xl">
+                Selected work, with the outcome first.
+              </h2>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-opacity hover:opacity-70"
+              >
+                Case Studies
+                <ArrowRight size={14} weight="bold" />
+              </Link>
+            </div>
+          </Reveal>
+
+          <CaseStudyIndex projects={projects} />
         </section>
       ) : null}
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="overflow-hidden rounded-lg border border-line bg-paper px-8 py-10 shadow-card md:px-10">
-          <div className="mb-8 h-1 w-16 rounded-full bg-accent" />
-          <p className="text-sm font-semibold uppercase text-accent">For hiring teams</p>
-          <h2 className="mt-3 max-w-3xl text-3xl font-bold tracking-tight text-ink md:text-4xl">
-            Looking for a senior engineer who can connect platform quality to business outcomes?
-          </h2>
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Link
-              href="https://www.linkedin.com/in/rakesh-cheekatimala/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-accent px-5 py-3 text-center font-semibold text-accent-contrast transition hover:bg-accent-dim hover:shadow-glow sm:w-auto"
-            >
-              Connect on LinkedIn
-            </Link>
+      {/* Career rail: compact company list, distinct from the case study index. */}
+      <section className="mx-auto max-w-6xl px-5 pb-20 md:px-8 md:pb-28">
+        <Reveal>
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <h2 className="text-3xl font-semibold tracking-tight text-ink md:text-4xl">
+              Ten years of shipping in Singapore.
+            </h2>
             <Link
               href="/work"
-              className="inline-flex min-h-12 items-center justify-center rounded-lg border border-line bg-paper px-5 py-3 text-center font-semibold text-ink transition hover:-translate-y-0.5 hover:border-accent/40 hover:text-accent sm:w-auto"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-opacity hover:opacity-70"
             >
               Review work history
+              <ArrowRight size={14} weight="bold" />
             </Link>
           </div>
+        </Reveal>
+
+        <Reveal>
+          <ul className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {experiences.map((experience) => (
+              <li
+                key={`${experience.company}-${experience.start}`}
+                className="min-w-[13rem] shrink-0 snap-start rounded-md border border-line px-5 py-4"
+              >
+                <p className="text-[15px] font-semibold text-ink">{experience.company}</p>
+                <p className="mt-1 text-[13px] leading-snug text-faint">{experience.role}</p>
+                <p className="mt-3 font-mono text-[11px] text-faint tnum">
+                  {experience.start} to {experience.end}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
+      {/* Closing CTA: single full-width band. */}
+      <section className="border-t border-line bg-surface">
+        <div className="mx-auto max-w-3xl px-5 py-20 text-center md:px-8 md:py-28">
+          <Reveal>
+            <h2 className="text-3xl font-semibold tracking-tight text-ink text-balance md:text-4xl">
+              Looking for a senior engineer who can connect platform quality to business outcomes?
+            </h2>
+            <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+              <Magnetic>
+                <Link
+                  href={LINKEDIN}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor-label="LinkedIn"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-accent px-6 text-sm font-semibold text-accent-contrast transition-colors hover:bg-accent-hover sm:w-auto"
+                >
+                  Connect on LinkedIn
+                  <ArrowRight size={15} weight="bold" />
+                </Link>
+              </Magnetic>
+              <Link
+                href="/work"
+                className="inline-flex h-12 w-full items-center justify-center rounded-md border border-line-strong px-6 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent sm:w-auto"
+              >
+                Review work history
+              </Link>
+            </div>
+          </Reveal>
         </div>
       </section>
     </>

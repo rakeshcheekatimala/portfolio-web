@@ -18,19 +18,6 @@ jest.mock('../../lib/mock-data', () => ({
   ]),
 }))
 
-// Mock Card component
-jest.mock('../../components/Card', () => {
-  return function MockCard({ title, description, href }: any) {
-    return (
-      <div data-testid="card">
-        <h3>{title}</h3>
-        <p>{description}</p>
-        <a href={href}>Read more</a>
-      </div>
-    )
-  }
-})
-
 describe('ProjectsPage', () => {
   it('renders the page title and description', async () => {
     const page = await ProjectsPage()
@@ -53,9 +40,14 @@ describe('ProjectsPage', () => {
   it('renders links to individual project pages', async () => {
     const page = await ProjectsPage()
     render(page)
-    
-    const links = screen.getAllByRole('link', { name: /read more/i })
-    expect(links[0]).toHaveAttribute('href', '/projects/project-one')
-    expect(links[1]).toHaveAttribute('href', '/projects/project-two')
+
+    expect(screen.getByRole('link', { name: /Project One/ })).toHaveAttribute(
+      'href',
+      '/projects/project-one'
+    )
+    expect(screen.getByRole('link', { name: /Project Two/ })).toHaveAttribute(
+      'href',
+      '/projects/project-two'
+    )
   })
 })

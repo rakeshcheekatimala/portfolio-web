@@ -64,7 +64,7 @@ describe('Home Page Integration', () => {
     
     // CTA buttons
     expect(screen.getByRole('link', { name: /^case studies$/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /review work history/i })).toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: /review work history/i })[0]).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /connect on linkedin/i })[0]).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /ask my agent/i })).toBeInTheDocument()
     
@@ -89,7 +89,7 @@ describe('Home Page Integration', () => {
     const page = await Home()
     render(page)
     
-    const workLink = screen.getByRole('link', { name: /review work history/i })
+    const workLink = screen.getAllByRole('link', { name: /review work history/i })[0]
     expect(workLink).toHaveAttribute('href', '/work')
     expect(workLink).not.toHaveAttribute('target')
   })

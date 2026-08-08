@@ -22,12 +22,6 @@ jest.mock('../lib/mock-data', () => ({
   ]),
 }))
 
-jest.mock('../components/Card', () => {
-  return function MockCard() {
-    return <div data-testid="card">Card</div>
-  }
-})
-
 jest.mock('../components/LocationBanner', () => {
   return function MockLocationBanner() {
     return <div data-testid="location-banner">Location Banner</div>
@@ -76,9 +70,9 @@ describe('Home', () => {
     
     const caseStudiesLink = screen.getByRole('link', { name: /^case studies$/i })
     expect(caseStudiesLink).toHaveAttribute('href', '/projects')
-    
-    const workLink = screen.getByRole('link', { name: /review work history/i })
-    expect(workLink).toHaveAttribute('href', '/work')
+
+    const workLinks = screen.getAllByRole('link', { name: /review work history/i })
+    expect(workLinks[0]).toHaveAttribute('href', '/work')
   })
 
   it('renders the primary LinkedIn hiring CTA', async () => {

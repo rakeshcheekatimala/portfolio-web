@@ -8,8 +8,8 @@ jest.mock('@ai-sdk/openai', () => ({
   openai: jest.fn(() => 'mocked-model'),
 }))
 
-const mockConvertToModelMessages = jest.fn((messages) => Promise.resolve(messages))
-const mockStreamText = jest.fn(() => ({
+const mockConvertToModelMessages = jest.fn((...args: any[]) => Promise.resolve(args[0]))
+const mockStreamText = jest.fn((..._args: any[]) => ({
   toUIMessageStream: jest.fn(() => 'mocked-ui-stream'),
 }))
 

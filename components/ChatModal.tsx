@@ -4,6 +4,7 @@ import { useChat } from '@ai-sdk/react'
 import { DefaultChatTransport } from 'ai'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { PaperPlaneRight, Stop, X } from '@phosphor-icons/react'
 
 const STARTER_QUESTIONS = [
   "Summarize Rakesh's frontend platform impact",
@@ -73,52 +74,49 @@ export default function ChatModal({ onClose }: ChatModalProps) {
   const modal = (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center p-0 backdrop-blur-md sm:items-center sm:p-4 md:p-6"
-      style={{ backgroundColor: 'var(--modal-backdrop)' }}
+      style={{ backgroundColor: 'var(--modal-scrim)' }}
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="ask-agent-title"
-        className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden border border-line bg-paper shadow-card-hover sm:h-[min(760px,calc(100dvh-48px))] sm:max-w-2xl sm:rounded-lg lg:max-w-3xl"
+        className="relative flex h-[100dvh] max-h-[100dvh] w-full flex-col overflow-hidden border border-line bg-surface shadow-high sm:h-[min(760px,calc(100dvh-48px))] sm:max-w-2xl sm:rounded-lg lg:max-w-3xl"
       >
         {/* Header */}
-        <div className="flex items-center justify-between gap-4 border-b border-line bg-paper/95 px-4 py-3 backdrop-blur sm:px-5 sm:py-4">
+        <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-3 sm:px-5 sm:py-4">
           <div className="flex min-w-0 items-center gap-3">
-            <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg border border-accent/25 bg-accent-soft text-sm font-bold text-accent-dim">
+            <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-md border border-accent/30 bg-accent-wash text-sm font-semibold text-accent">
               R
             </div>
             <div className="min-w-0">
-              <div id="ask-agent-title" className="text-base font-semibold leading-tight text-ink sm:text-lg">Ask My Agent</div>
-              <div className="mt-0.5 text-xs leading-snug text-muted sm:text-sm">Hiring-focused answers about Rakesh&apos;s work</div>
+              <div id="ask-agent-title" className="text-[15px] font-semibold leading-tight text-ink">Ask My Agent</div>
+              <div className="mt-0.5 text-xs leading-snug text-faint">Hiring-focused answers about Rakesh&apos;s work</div>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg border border-transparent text-muted transition-colors hover:border-line hover:bg-wash hover:text-ink"
+            className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-md border border-transparent text-faint transition-colors hover:border-line hover:bg-raised hover:text-ink"
             aria-label="Close chat"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <X size={17} weight="bold" aria-hidden="true" />
           </button>
         </div>
 
         {/* Messages */}
         <div className="flex-1 space-y-4 overflow-y-auto px-4 py-5 sm:px-5 sm:py-6">
           {messages.length === 0 && (
-            <div className="mx-auto flex min-h-full w-full max-w-xl flex-col justify-start gap-5 pt-2 text-left sm:justify-center sm:pt-0">
+            <div className="mx-auto flex min-h-full w-full max-w-xl flex-col justify-start gap-6 pt-2 text-left sm:justify-center sm:pt-0">
               <div className="space-y-2 sm:text-center">
-                <p className="text-base font-semibold text-graphite sm:text-lg">Ask a focused hiring question.</p>
-                <p className="text-sm leading-relaxed text-muted sm:text-base">I can summarize Rakesh&apos;s experience, impact, case studies, and team fit.</p>
+                <p className="text-base font-semibold text-ink sm:text-lg">Ask a focused hiring question.</p>
+                <p className="text-sm leading-relaxed text-body">I can summarize Rakesh&apos;s experience, impact, case studies, and team fit.</p>
               </div>
-              <div className="grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
+              <div className="grid w-full grid-cols-1 gap-2.5 sm:grid-cols-2">
                 {STARTER_QUESTIONS.map((q) => (
                   <button
                     key={q}
                     onClick={() => handleStarterClick(q)}
-                    className="min-h-14 rounded-lg border border-line bg-wash/60 px-4 py-3 text-left text-sm font-medium leading-snug text-graphite transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/50 hover:bg-accent-soft hover:text-accent-dim hover:shadow-glow-sm active:translate-y-0 sm:min-h-16 sm:text-base"
+                    className="min-h-14 rounded-md border border-line px-4 py-3 text-left text-sm font-medium leading-snug text-body transition-colors hover:border-accent hover:bg-accent-wash hover:text-accent sm:min-h-16"
                   >
                     {q}
                   </button>
@@ -138,15 +136,15 @@ export default function ChatModal({ onClose }: ChatModalProps) {
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.role === 'assistant' && (
-                  <div className="w-7 h-7 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center mr-2.5 mt-0.5 flex-shrink-0">
-                    <span className="text-accent-dim text-xs font-bold">R</span>
+                  <div className="mr-2.5 mt-0.5 grid h-7 w-7 flex-shrink-0 place-items-center rounded-md border border-accent/30 bg-accent-wash">
+                    <span className="text-[11px] font-semibold text-accent">R</span>
                   </div>
                 )}
                 <div
-                  className={`max-w-[min(86%,42rem)] rounded-lg px-4 py-2.5 text-sm leading-relaxed shadow-card whitespace-pre-wrap ${
+                  className={`max-w-[min(86%,42rem)] whitespace-pre-wrap rounded-md px-4 py-2.5 text-sm leading-relaxed ${
                     message.role === 'user'
-                      ? 'bg-accent text-accent-contrast font-medium'
-                      : 'bg-wash text-graphite border border-line'
+                      ? 'bg-accent font-medium text-accent-contrast'
+                      : 'border border-line bg-raised text-body'
                   }`}
                 >
                   {text}
@@ -157,14 +155,14 @@ export default function ChatModal({ onClose }: ChatModalProps) {
 
           {isLoading && (
             <div className="flex justify-start">
-              <div className="w-7 h-7 rounded-full bg-accent/20 border border-accent/30 flex items-center justify-center mr-2.5 flex-shrink-0">
-                <span className="text-accent-dim text-xs font-bold">R</span>
+              <div className="mr-2.5 grid h-7 w-7 flex-shrink-0 place-items-center rounded-md border border-accent/30 bg-accent-wash">
+                <span className="text-[11px] font-semibold text-accent">R</span>
               </div>
-              <div className="rounded-lg border border-line bg-wash px-4 py-3">
-                <div className="flex gap-1.5 items-center">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent/60 animate-bounce" style={{ animationDelay: '300ms' }} />
+              <div className="rounded-md border border-line bg-raised px-4 py-3">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-accent/60" style={{ animationDelay: '0ms' }} />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-accent/60" style={{ animationDelay: '150ms' }} />
+                  <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-accent/60" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             </div>
@@ -174,43 +172,42 @@ export default function ChatModal({ onClose }: ChatModalProps) {
         </div>
 
         {/* Input */}
-        <div className="border-t border-line bg-paper/95 px-3 py-3 backdrop-blur sm:px-5 sm:py-4">
+        <div className="border-t border-line px-3 py-3 sm:px-5 sm:py-4">
           <div className="flex items-end gap-2 sm:gap-3">
+            <label htmlFor="ask-agent-input" className="sr-only">
+              Your question
+            </label>
             <textarea
+              id="ask-agent-input"
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
               placeholder="Ask about Rakesh's fit, impact, or case studies..."
               rows={1}
-              className="min-h-16 flex-1 resize-none rounded-lg border border-line bg-wash px-4 py-3 text-base leading-6 text-graphite placeholder-subtle transition-all focus:border-accent/60 focus:outline-none focus:ring-1 focus:ring-accent/30 sm:min-h-12 sm:text-sm"
+              className="min-h-16 flex-1 resize-none rounded-md border border-line bg-raised px-4 py-3 text-base leading-6 text-ink transition-colors placeholder:text-faint focus:border-accent focus:outline-none sm:min-h-12 sm:text-sm"
               style={{ maxHeight: '120px' }}
             />
             {isLoading ? (
               <button
                 onClick={stop}
-                className="flex h-16 w-12 flex-shrink-0 items-center justify-center rounded-lg border border-line bg-wash transition-all hover:bg-accent-soft sm:h-11 sm:w-11"
+                className="flex h-16 w-12 flex-shrink-0 items-center justify-center rounded-md border border-line bg-raised text-ink transition-colors hover:border-accent hover:text-accent sm:h-11 sm:w-11"
                 aria-label="Stop generation"
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="text-ink">
-                  <rect x="4" y="4" width="16" height="16" rx="2" />
-                </svg>
+                <Stop size={15} weight="fill" aria-hidden="true" />
               </button>
             ) : (
               <button
                 onClick={handleSend}
                 disabled={!input.trim()}
-                className="flex h-16 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-accent transition-all hover:bg-accent-dim disabled:cursor-not-allowed disabled:opacity-40 sm:h-11 sm:w-11"
+                className="flex h-16 w-12 flex-shrink-0 items-center justify-center rounded-md bg-accent text-accent-contrast transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-40 sm:h-11 sm:w-11"
                 aria-label="Send message"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-contrast">
-                  <line x1="22" y1="2" x2="11" y2="13" />
-                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                </svg>
+                <PaperPlaneRight size={16} weight="fill" aria-hidden="true" />
               </button>
             )}
           </div>
-          <p className="mt-2 hidden text-center text-xs text-subtle sm:block">Press Enter to send - Shift+Enter for new line - Esc to close</p>
+          <p className="mt-2 hidden text-center text-xs text-faint sm:block">Press Enter to send - Shift+Enter for new line - Esc to close</p>
         </div>
       </div>
     </div>

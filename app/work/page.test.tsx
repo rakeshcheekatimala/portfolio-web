@@ -22,10 +22,10 @@ describe('WorkPage', () => {
     expect(screen.getByTestId('experience-timeline')).toBeInTheDocument()
   })
 
-  it('renders as a main element', () => {
+  // The root layout owns the single <main> landmark, so the page must not add another.
+  it('does not nest a second main landmark', () => {
     const { container } = render(<WorkPage />)
-    
-    const main = container.querySelector('main')
-    expect(main).toBeInTheDocument()
+
+    expect(container.querySelector('main')).not.toBeInTheDocument()
   })
 })
