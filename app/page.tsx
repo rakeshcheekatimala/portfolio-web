@@ -8,6 +8,7 @@ import SocailLinks from '@components/SocailLinks'
 import Spotlight from '@components/Spotlight'
 import { getMockProjects } from '../lib/mock-data'
 import { experiences } from '../experiences'
+import { engineeringNotes, featuredBuilds, recruiterFit } from '../lib/profile'
 
 const LINKEDIN = 'https://www.linkedin.com/in/rakesh-cheekatimala/'
 
@@ -36,6 +37,14 @@ const valuePillars = [
   },
 ]
 
+const judgmentSignals = [
+  'Reduce frontend weight before optimizing surface details.',
+  'Add observability where debugging is expensive.',
+  'Use CI gates, tests, and audits to protect release confidence.',
+  'Treat AI systems as production infrastructure, not demos.',
+  'Document reusable patterns so teams move faster.',
+]
+
 export default async function Home() {
   const projects = await getMockProjects()
   const [leadPillar, ...supportingPillars] = valuePillars
@@ -53,7 +62,7 @@ export default async function Home() {
 
           <Reveal index={1}>
             <h1 className="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight text-ink text-balance md:text-5xl lg:text-6xl">
-              I build revenue critical systems that customers can trust.
+              I build revenue-critical frontend and Applied AI systems teams can trust.
             </h1>
           </Reveal>
 
@@ -92,19 +101,17 @@ export default async function Home() {
         <Reveal index={2} distance={20}>
           <aside className="border-t border-line pt-7 lg:mt-1 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-faint">
-              Current focus
+              Best fit for
             </p>
             <ul className="mt-6">
-              {[
-                ['01', 'Frontend platforms'],
-                ['02', 'Payments & identity'],
-                ['03', 'Applied AI systems'],
-              ].map(([number, label]) => (
+              {recruiterFit.slice(0, 5).map((label, index) => (
                 <li
-                  key={number}
+                  key={label}
                   className="flex items-center gap-5 border-t border-line py-5 first:border-t-0 first:pt-0"
                 >
-                  <span className="font-mono text-[10px] text-accent tnum">{number}</span>
+                  <span className="font-mono text-[10px] text-accent tnum">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                   <span className="text-sm font-medium text-ink">{label}</span>
                 </li>
               ))}
@@ -182,6 +189,135 @@ export default async function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Current builds: concrete AI/platform work, kept factual and source-linked. */}
+      <section className="border-y border-line bg-surface">
+        <div className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
+          <Reveal>
+            <div className="grid gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
+              <div>
+                <p className="text-sm font-medium text-accent">Building now</p>
+                <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink text-balance md:text-4xl">
+                  Production discipline, applied to AI tooling.
+                </h2>
+                <p className="mt-5 text-[15px] leading-relaxed text-body text-pretty">
+                  These projects make the Applied AI direction visible without pretending the last
+                  decade of frontend and platform work did not happen.
+                </p>
+              </div>
+
+              <div className="divide-y divide-line border-y border-line">
+                {featuredBuilds.map((build) => (
+                  <a
+                    key={build.title}
+                    href={build.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block py-6"
+                    data-cursor-label="GitHub"
+                  >
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <h3 className="text-xl font-semibold tracking-tight text-ink transition-colors group-hover:text-accent">
+                          {build.title}
+                        </h3>
+                        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-body text-pretty">
+                          {build.summary}
+                        </p>
+                        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-faint text-pretty">
+                          {build.proof}
+                        </p>
+                      </div>
+                      <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.14em] text-faint transition-colors group-hover:text-accent">
+                        GitHub
+                      </span>
+                    </div>
+                    <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1">
+                      {build.tags.map((tag) => (
+                        <span key={tag} className="font-mono text-[11px] text-faint">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Writing: thinking in public, curated for recruiter scanning. */}
+      <section className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
+        <Reveal>
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
+            <div className="max-w-2xl">
+              <p className="text-sm font-medium text-accent">Engineering notes</p>
+              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink text-balance md:text-4xl">
+                How I think about platforms, agents, and trustworthy AI systems.
+              </h2>
+            </div>
+            <Link
+              href="/writing"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-accent transition-opacity hover:opacity-70"
+            >
+              Read writing
+              <ArrowRight size={14} weight="bold" />
+            </Link>
+          </div>
+        </Reveal>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {engineeringNotes.map((note, index) => (
+            <Reveal key={note.title} index={index}>
+              <a
+                href={note.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex h-full flex-col rounded-lg border border-line bg-surface p-6 transition-colors hover:border-line-strong"
+                data-cursor-label={note.source}
+              >
+                <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
+                  {note.source}
+                </span>
+                <h3 className="mt-4 text-lg font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
+                  {note.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-body text-pretty">{note.summary}</p>
+                <div className="mt-5 flex flex-wrap gap-x-3 gap-y-1">
+                  {note.tags.map((tag) => (
+                    <span key={tag} className="font-mono text-[11px] text-faint">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Judgment: small signals of seniority beyond raw output. */}
+      <section className="mx-auto max-w-6xl px-5 pb-20 md:px-8 md:pb-28">
+        <div className="border-y border-line py-14">
+          <Reveal>
+            <p className="text-sm font-medium text-accent">Proof of judgment</p>
+            <h2 className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-ink text-balance md:text-4xl">
+              I make systems easier to ship, debug, and trust.
+            </h2>
+            <ul className="mt-8 grid gap-x-10 border-y border-line md:grid-cols-2">
+              {judgmentSignals.map((signal) => (
+                <li
+                  key={signal}
+                  className="border-b border-line py-4 text-[15px] leading-relaxed text-body last:border-b-0 md:[&:nth-last-child(-n+2)]:border-b-0"
+                >
+                  {signal}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </section>
 

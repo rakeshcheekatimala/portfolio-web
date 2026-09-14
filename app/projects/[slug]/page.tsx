@@ -153,7 +153,7 @@ export default function ProjectPage({ params }: Params) {
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-sm border border-line px-2.5 py-1 font-mono text-[11px] text-body"
+                    className="inline-flex h-7 items-center rounded-md border border-line-strong bg-raised px-3 font-mono text-xs font-medium text-body shadow-low"
                   >
                     {tag}
                   </span>

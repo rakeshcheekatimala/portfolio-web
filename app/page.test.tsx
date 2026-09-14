@@ -45,7 +45,7 @@ describe('Home', () => {
     const page = await Home()
     render(page)
     
-    expect(screen.getByText(/I build revenue critical systems/i)).toBeInTheDocument()
+    expect(screen.getByText(/I build revenue-critical frontend/i)).toBeInTheDocument()
     expect(screen.getByText(/Rakesh Cheekatimala/)).toBeInTheDocument()
   })
 
@@ -105,5 +105,19 @@ describe('Home', () => {
     expect(screen.getByText(/What I'm hired to improve/i)).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Revenue-critical frontend' })).toBeInTheDocument()
     expect(screen.getAllByText(/Case Studies/i).length).toBeGreaterThan(0)
+  })
+
+  it('renders building, writing, and judgment sections', async () => {
+    const page = await Home()
+    render(page)
+
+    expect(screen.getByText('Building now')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /AnswerLint/i })).toHaveAttribute(
+      'href',
+      'https://github.com/rakeshcheekatimala/answerlint'
+    )
+    expect(screen.getByText('Engineering notes')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Read writing/i })).toHaveAttribute('href', '/writing')
+    expect(screen.getByText('Proof of judgment')).toBeInTheDocument()
   })
 })

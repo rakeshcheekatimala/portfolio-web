@@ -58,9 +58,11 @@ describe('Home Page Integration', () => {
     render(page)
     
     // Hero section
-    expect(screen.getByText(/I build revenue critical systems/i)).toBeInTheDocument()
+    expect(screen.getByText(/I build revenue-critical frontend/i)).toBeInTheDocument()
     expect(screen.getByText(/Rakesh Cheekatimala/)).toBeInTheDocument()
     expect(screen.getByText(/Singapore-based engineer/)).toBeInTheDocument()
+    expect(screen.getByText('Best fit for')).toBeInTheDocument()
+    expect(screen.getAllByText('Senior Frontend Engineer').length).toBeGreaterThan(0)
     
     // CTA buttons
     expect(screen.getByRole('link', { name: /^case studies$/i })).toBeInTheDocument()
@@ -73,6 +75,14 @@ describe('Home Page Integration', () => {
     
     // Hiring proof sections
     expect(screen.getByText(/What I'm hired to improve/i)).toBeInTheDocument()
+    expect(screen.getByText('Building now')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /AnswerLint/i })).toHaveAttribute(
+      'href',
+      'https://github.com/rakeshcheekatimala/answerlint'
+    )
+    expect(screen.getByText('Engineering notes')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Read writing/i })).toHaveAttribute('href', '/writing')
+    expect(screen.getByText('Proof of judgment')).toBeInTheDocument()
     expect(screen.getAllByText(/Case Studies/i).length).toBeGreaterThan(0)
   })
 
@@ -103,7 +113,7 @@ describe('Home Page Integration', () => {
     
     // Hero section should be first
     const firstSection = sections[0]
-    expect(firstSection.textContent).toContain('revenue critical')
+    expect(firstSection.textContent).toContain('revenue-critical')
     expect(firstSection.textContent).toContain('Rakesh')
   })
 })

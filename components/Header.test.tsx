@@ -21,6 +21,9 @@ describe('Header', () => {
 
     const caseStudiesLink = screen.getAllByRole('link', { name: /case studies/i })[0]
     expect(caseStudiesLink).toHaveAttribute('href', '/projects')
+
+    const writingLink = screen.getAllByRole('link', { name: /writing/i })[0]
+    expect(writingLink).toHaveAttribute('href', '/writing')
     
     const aboutLink = screen.getAllByRole('link', { name: /about/i })[0]
     expect(aboutLink).toHaveAttribute('href', '/about')
